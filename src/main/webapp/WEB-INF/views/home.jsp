@@ -10,5 +10,6 @@
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
+<a href="/border/list"><h2>Border List</h2></a>
 </body>
 </html>

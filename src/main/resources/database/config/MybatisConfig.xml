@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+ 
+ <configuration>
+   <typeAliases>
+   		<!-- type = 풀패키지명, alias = 변수명 -->
+  	 	<typeAlias type="com.sam.main.border.BorderDTO" alias="BorderDTO"/>
+  	 	<typeAlias type="com.sam.main.util.Pager" alias="Pager"/>
+  	 	<typeAlias type="java.lang.Integer" alias="Integer"/>
+   </typeAliases>
+ </configuration>

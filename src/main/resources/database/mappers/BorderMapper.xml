@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- namespace = DAO클래스가 있는 패키지명 -->
+  <mapper namespace="com.sam.main.border"> 
+  
+  	<sql id="searchCondition">
+  		<choose>
+  			<when test="searchKind == 'member'">
+  				WHERE MEMBERID LIKE '%' || #{searchDetail} || '%'
+  			</when>
+  			<when test="searchKind == 'title'">
+  				WHERE BORDERTITLE LIKE '%' || #{searchDetail} || '%'
+  			</when>
+  			<when test="searchKind == 'detail'">
+  				WHERE BORDERDETAIL LIKE '%' || #{searchDetail} || '%'
+  			</when>
+  			<otherwise>
+  				WHERE BORDERTITLE LIKE '%' || #{searchDetail} || '%'
+  					  OR BORDERDETAIL LIKE '%' || #{searchDetail} || '%'
+  			</otherwise>
+  		</choose>
+  	</sql>
+  	
+  	<!-- DAO에 있는 method명과 동일하게 -->
+  	<select id="getBorderList" parameterType="Pager" resultType="BorderDTO">
+  		SELECT * FROM
+		(SELECT ROWNUM R,A.* FROM
+		(SELECT * FROM BORDER
+		<include refid="searchCondition"></include>	
+		) A )
+		WHERE R BETWEEN #{minRow} AND #{maxRow}
+  	</select>
+ 	
+ 	<select id="getBorderCount" parameterType="Pager" resultType="Integer">
+ 		SELECT COUNT(BORDERID) FROM BORDER
+ 		<include refid="searchCondition"></include>
+ 	</select>
+ 	
+  </mapper>
