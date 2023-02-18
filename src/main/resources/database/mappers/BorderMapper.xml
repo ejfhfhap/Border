@@ -6,6 +6,81 @@
   <!-- namespace = DAO클래스가 있는 패키지명 -->
   <mapper namespace="com.sam.main.border"> 
   
+<!-- 	private Integer borderId;
+	private String memberId;
+	private String borderTitle;
+	private String borderDetail;
+	private Date borderDate;
+	private Integer borderCount;
+	private BorderImgDTO borderImgDTO; -->
+	<!-- 조회수 + 1 -->
+	<update id="setBorderCountAdd" parameterType="BorderDTO">
+	  UPDATE BORDER SET borderCount = borderCount + 1 WHERE BORDERID = #{borderId}
+	</update>
+	
+	<!-- 데이터 업데이트 -->
+	<update id="setBorderUpdate" parameterType="BorderDTO">
+		UPDATE BORDER
+		<trim prefix="SET" suffixOverrides=",">
+			borderId = #{borderId},
+			<if test="borderTitle != ''">borderTitle = #{borderTitle},</if>
+			<if test="borderDetail != ''">borderDetail = #{borderDetail}</if>
+		</trim>
+		WHERE borderId = #{borderId}
+	</update>
+	
+	<!-- 데이터 삭제 -->
+	<delete id="setBorderDelete" parameterType="BorderDTO">
+		DELETE BORDER WHERE borderId = #{borderId}
+	</delete>
+	<delete id="setBorderImgDelete" parameterType="BorderDTO">
+		DELETE BORDERIMG WHERE borderId = #{borderId}
+	</delete>
+	
+<!-- 		DELETE BORDERIMG WHERE borderId = #{borderId} -->
+  <!-- 데이터 상세정보 -->
+ <select id="getBorderDetail" parameterType="BorderDTO" resultMap="DTOJoinImg">
+ 	SELECT * FROM BORDER B
+	LEFT JOIN BORDERIMG B2 USING(BORDERID)
+	WHERE borderId = #{borderId}
+ </select>
+ 
+ <resultMap type="BorderDTO" id="DTOJoinImg">
+ 	<id property="borderId" column="borderId" />
+ 	<result property="memberId" column="memberId"/>
+ 	<result property="borderTitle" column="borderTitle"/>
+ 	<result property="borderDetail" column="borderDetail"/>
+ 	<result property="borderDate" column="borderDate"/>
+ 	<result property="borderCount" column="borderCount"/>
+ 	
+ 	<association property="borderImgDTO" javaType="BorderImgDTO" >
+ 		<id property="imgId" column="imgId"/>
+ 		<result property="borderId" column="borderId"/>
+ 		<result property="imgName" column="imgName"/>
+ 		<result property="imgOriName" column="imgOriName"/>
+ 	</association>
+ </resultMap>
+	
+  <!-- 데이터 추가하기 -->
+  <insert id="setBorderAdd" parameterType="BorderDTO">
+  		<selectKey order="BEFORE" keyProperty="borderId" resultType="Integer" >
+  			SELECT BORDERID_SEQ.NEXTVAL FROM DUAL
+  		</selectKey>
+  		INSERT INTO BORDER VALUES(#{borderId},#{memberId},#{borderTitle},#{borderDetail},SYSDATE,#{borderCount})
+  </insert>
+  <insert id="setBorderImgAdd" parameterType="BorderImgDTO">
+  	<selectKey order="BEFORE" keyProperty="imgId" resultType="Integer">
+  		SELECT BORDERIMGID_SEQ.NEXTVAL FROM DUAL
+  	</selectKey>
+  	INSERT INTO BORDERIMG VALUES(#{imgId},#{borderId},#{imgName},#{imgOriName})
+  </insert>
+  
+<!--   	private Integer imgId;
+	private Integer borderId;
+	private String imgName;
+	private String imgOriName; -->
+	
+	<!-- 	리스트 뽑아오기 -->
   	<sql id="searchCondition">
   		<choose>
   			<when test="searchKind == 'member'">
@@ -32,6 +107,7 @@
 		<include refid="searchCondition"></include>	
 		) A )
 		WHERE R BETWEEN #{minRow} AND #{maxRow}
+		ORDER BY BORDERID
   	</select>
  	
  	<select id="getBorderCount" parameterType="Pager" resultType="Integer">

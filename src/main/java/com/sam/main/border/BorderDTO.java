@@ -9,7 +9,15 @@ public class BorderDTO {
 	private String borderDetail;
 	private Date borderDate;
 	private Integer borderCount;
+	private BorderImgDTO borderImgDTO;
 	
+	
+	public BorderImgDTO getBorderImgDTO() {
+		return borderImgDTO;
+	}
+	public void setBorderImgDTO(BorderImgDTO borderImgDTO) {
+		this.borderImgDTO = borderImgDTO;
+	}
 	public Integer getBorderId() {
 		return borderId;
 	}
@@ -23,12 +31,14 @@ public class BorderDTO {
 		this.memberId = memberId;
 	}
 	public String getBorderTitle() {
+		//if(borderTitle == "")return null;
 		return borderTitle;
 	}
 	public void setBorderTitle(String borderTitle) {
 		this.borderTitle = borderTitle;
 	}
 	public String getBorderDetail() {
+		//if(borderDetail == "")return null;
 		return borderDetail;
 	}
 	public void setBorderDetail(String borderDetail) {
@@ -41,6 +51,9 @@ public class BorderDTO {
 		this.borderDate = borderDate;
 	}
 	public Integer getBorderCount() {
+		 if(borderCount == null) {
+			 borderCount = 0;
+		 }
 		return borderCount;
 	}
 	public void setBorderCount(Integer borderCount) {

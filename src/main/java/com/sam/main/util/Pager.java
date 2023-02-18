@@ -12,13 +12,14 @@ public class Pager {
 
 	
 	public void setBlockRange() {
-		System.out.println("totalDataCount " + totalDataCount);
+		//System.out.println("totalDataCount " + totalDataCount);
 
 		int curBlock = getPage() / getPerBlock();
 		if(getPage() % getPerBlock() != 0) {
 			curBlock++;
 		}
 
+				
 		minBlock = ((curBlock - 1) * getPerBlock()) + 1;
 		maxBlock = curBlock * getPerBlock();
 		
@@ -32,10 +33,14 @@ public class Pager {
 		if(maxBlock > maxPage) {
 			maxBlock = maxPage;
 		}
-		System.out.println("block " + page);
+		//System.out.println("block " + page);
 		
 		// ------ 다음으로 가는 페이지 활성화 비활성화
-		if(curBlock == maxBlock) {
+		int curMaxBlock = maxPage / getPerBlock();
+		if(maxPage % getPerBlock() != 0) {
+			curMaxBlock++;
+		}
+		if(curBlock == curMaxBlock) {
 			next = false;
 		}
 		if(curBlock == 1) {

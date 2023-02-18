@@ -9,17 +9,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.sam.main.border.BorderDAO;
+import com.sam.main.border.BorderDTO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/**/*.context.xml"})
 public class Mytest {
 	
-	@Autowired
-	BorderDAO borderDAO;
 	
-	@Test
-	public void insertBorder() {
-		
-	}
 }
 
