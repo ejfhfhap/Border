@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.sam.main.member">
+ 
+ 	<!-- 	private String memberId;
+	private String memberPw;
+	private String memberName;
+	private String memberPhone;
+	private String memberEmail;
+	private String memberAddress;
+	private String memberDate; -->
+	
+	<delete id="setMemberDelete" parameterType="MemberDTO">
+		DELETE MEMBER WHERE memberId = #{memberId}
+	</delete>
+	
+ 	<update id="setMemberUpdate" parameterType="MemberDTO">
+ 		UPDATE MEMBER
+ 		<trim prefix="SET" suffixOverrides=",">
+ 			memberId = #{memberId},
+ 			<if test="memberName != ''">memberName = #{memberName},</if>
+ 			<if test="memberPhone != ''">memberPhone = #{memberPhone},</if>
+ 			<if test="memberEmail != ''">memberEmail = #{memberEmail},</if>
+ 			<if test="memberAddress != ''">memberAddress = #{memberAddress},</if>
+ 		</trim>
+ 		WHERE memberId = #{memberId}
+ 	</update>
+ 
+ 	<select id="getMemberDetail" parameterType="MemberDTO" resultType="MemberDTO">
+ 		SELECT * FROM MEMBER WHERE memberId = #{memberId}
+ 	</select>
+ 
+ 	<insert id="setMemberAdd" parameterType="MemberDTO">
+ 		INSERT INTO MEMBER VALUES(#{memberId},#{memberPw},#{memberName},#{memberPhone},#{memberEmail},#{memberAddress},SYSDATE)
+ 	</insert>
+
+ 	<sql id="searchCondition">
+ 		<choose>
+ 			<when test="searchKind == 'id'">
+ 				WHERE MEMBERID LIKE '%' || #{searchDetail} || '%'
+ 			</when>
+ 			<otherwise>
+ 				WHERE MEMBERNAME LIKE '%' || #{searchDetail} || '%'
+ 			</otherwise>
+ 		</choose>
+ 	</sql>
+ 
+ 	<select id="getMemberList" parameterType="Pager" resultType="MemberDTO">
+ 	SELECT * from(
+ 		SELECT ROWNUM R,B.* 
+		FROM (
+			SELECT * FROM MEMBER
+			<include refid="searchCondition"></include>
+		) B)
+		WHERE R BETWEEN #{minRow} AND #{maxRow}
+ 	</select>
+ 	
+ 	<select id="getMemberCount" parameterType="Pager" resultType="Integer">
+ 		SELECT COUNT(MEMBERID) FROM MEMBER
+ 		<include refid="searchCondition"></include>
+ 	</select>
+ </mapper>

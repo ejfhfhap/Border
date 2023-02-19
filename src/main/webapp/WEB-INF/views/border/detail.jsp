@@ -10,12 +10,19 @@
 </head>
 <body>
 	<c:import url="../template/header.jsp"></c:import>
+	
+
+	  
 	<section class="container-fluid">
 		<c:if test="${not empty borderDTO.borderImgDTO.imgName}">
 			<div class="row"><img src="/resources/upload/border/${borderDTO.borderImgDTO.imgName}"></div>
 		</c:if>
-		<div class = "row"><h2>제목: ${borderDTO.borderTitle}</h2></div>
-		<div class="row"><h2>내용: ${borderDTO.borderDetail}</h2></div>
+		
+		<div class="col-md-4">
+		    <label for="validationCustom02" class="form-label"><h2>제목: ${borderDTO.borderTitle}</h2></label>
+		    <div for="validationCustom02" class="form-label"><h2>내용: ${borderDTO.borderDetail}</h2></div>
+    	</div>
+
 	</section>
 	<a href = "./delete?borderId=${borderDTO.borderId}">삭제하기</a>
 	<a href = "./update?borderId=${borderDTO.borderId}">수정하기</a>

@@ -8,6 +8,9 @@
    		<!-- type = 풀패키지명, alias = 변수명 -->
   	 	<typeAlias type="com.sam.main.border.BorderDTO" alias="BorderDTO"/>
 	 	<typeAlias type="com.sam.main.border.BorderImgDTO" alias="BorderImgDTO"/>
+  	 	
+  	 	<typeAlias type="com.sam.main.member.MemberDTO" alias="MemberDTO"/>
+  	 	
   	 	<typeAlias type="com.sam.main.util.Pager" alias="Pager"/>
   	 	<typeAlias type="java.lang.Integer" alias="Integer"/>
    </typeAliases>

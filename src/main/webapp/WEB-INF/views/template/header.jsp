@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">Home</a>
@@ -13,7 +17,12 @@
           <a class="nav-link" href="/member/list">Member List</a>
         </li>
         <li class="nav-item">
-    		<a class="nav-link" href = "#">Login</a>
+        	<c:if test="${empty login }">
+ 		    		<a class="nav-link" href = "/member/login">Login</a>
+        	</c:if>
+        	<c:if test="${not empty login}">
+ 		    		<a class="nav-link" href = "/member/logout">Logout</a>
+        	</c:if>
    		</li>
       </ul>
     </div>

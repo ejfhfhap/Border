@@ -55,6 +55,7 @@ public class BorderController {
 
 		borderDTO = borderService.getBorderDetail(borderDTO);
 		modelAndView.addObject("borderDTO", borderDTO);
+		System.out.println("img " + borderDTO.getBorderImgDTO());
 		
 		modelAndView.setViewName("/border/detail");
 		return modelAndView;
